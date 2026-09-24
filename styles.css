@@ -1,495 +1,412 @@
-/* ──────────────────────────────────────────────────────────
-   Budget Tracker · Editorial Terminal theme
-   Matches Compound Return Terminal aesthetic
-   ────────────────────────────────────────────────────────── */
-
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+/* ============================================================
+   Gestionnaire de Budget — thème sombre
+   Palette : encre profonde, sable chaud, chiffres en monospace
+   ============================================================ */
 
 :root {
-  --bg: #0b0d10;
-  --bg-elev: #11141a;
-  --bg-card: #151921;
-  --bg-hover: #1a1e27;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --ink: #e8e6df;
-  --ink-muted: #8b8a84;
-  --ink-dim: #5a5955;
+    --ink:        #0E0F11;
+    --panel:      #16181B;
+    --panel-2:    #1C1F23;
+    --line:       #272B30;
+    --line-soft:  #1F2327;
 
-  --accent: #c9a46b;
-  --accent-ink: #1a1308;
-  --accent-soft: rgba(201, 164, 107, 0.12);
+    --text:       #E8E4DC;
+    --text-dim:   #8B8F94;
+    --text-faint: #5E646A;
 
-  --pos: #4ea884;
-  --pos-soft: rgba(78, 168, 132, 0.12);
-  --neg: #c66a5a;
-  --neg-soft: rgba(198, 106, 90, 0.12);
-  --capital: #6b6a64;
+    --sand:       #D6A96A;
+    --sage:       #6FB79A;
+    --clay:       #C9705C;
 
-  --serif: 'Fraunces', ui-serif, Georgia, serif;
-  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --radius:     4px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 15px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "ss01", "cv11";
-  min-height: 100vh;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201, 164, 107, 0.06), transparent 60%);
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--ink);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+    -webkit-font-smoothing: antialiased;
 }
 
 .container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 32px 40px 80px;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
-/* ── Header ─────────────────────────────────────────────── */
+/* ---------- En-tête ---------- */
+
 header {
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 28px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
+    text-align: center;
+    padding-bottom: 32px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--line-soft);
 }
 
-header h1 {
-  font-family: var(--serif);
-  font-size: 28px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  font-variation-settings: "opsz" 40;
-  color: var(--ink);
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
+h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 22px;
 }
 
-/* Hide the emoji, replace with editorial tag */
-header h1::before {
-  content: 'Budg · 01';
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-  padding: 4px 10px;
-  border: 1px solid var(--accent);
-  border-radius: 2px;
-  opacity: 0.85;
-  font-weight: 500;
-  font-variation-settings: normal;
+.view-toggle {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 3px;
+    margin-bottom: 20px;
+    background: var(--panel);
+}
+
+.toggle-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 26px;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: color 0.18s, background 0.18s;
+}
+
+.toggle-btn:hover {
+    color: var(--text);
+}
+
+.toggle-btn.active {
+    background: var(--sand);
+    color: #17130C;
+    font-weight: 600;
 }
 
 .month-selector {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: var(--bg-elev);
-  border: 1px solid var(--line-strong);
-  border-radius: 4px;
-  padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
 }
 
-.month-selector h2 {
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0 16px;
-  min-width: 180px;
-  text-align: center;
+#currentPeriod {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.35rem;
+    color: var(--text);
+    min-width: 230px;
+    letter-spacing: 0.01em;
 }
 
 .month-btn {
-  background: transparent;
-  border: none;
-  color: var(--ink-muted);
-  font-family: var(--mono);
-  font-size: 14px;
-  padding: 6px 12px;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: all 0.15s;
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.18s;
 }
 
 .month-btn:hover {
-  background: var(--accent-soft);
-  color: var(--accent);
+    color: var(--sand);
+    border-color: var(--sand);
 }
 
-/* ── Summary cards ─────────────────────────────────────── */
+/* ---------- Cartes sommaire ---------- */
+
 .summary-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 36px;
 }
 
 .card {
-  background: var(--bg-elev);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 18px 20px 16px;
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 2px;
-  height: 28px;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-left: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    text-align: left;
 }
 
 .card h3 {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  margin-bottom: 8px;
-  font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 10px;
 }
 
 .card .amount {
-  font-family: var(--serif);
-  font-size: 28px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-  font-variation-settings: "opsz" 40;
-  color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.015em;
 }
 
-.income-card::before { background: var(--capital); }
-.expense-card::before { background: var(--accent); }
-.balance-card::before { background: var(--pos); }
+.income-card   { border-left-color: var(--sage); }
+.expense-card  { border-left-color: var(--sand); }
+.balance-card  { border-left-color: var(--sage); }
 
-.income-card .amount { color: var(--ink); }
-.expense-card .amount { color: var(--accent); }
-.balance-card .amount { color: var(--pos); }
-.balance-card.negative::before { background: var(--neg); }
-.balance-card.negative .amount { color: var(--neg); }
+.income-card .amount  { color: var(--text); }
+.expense-card .amount { color: var(--sand); }
+.balance-card .amount { color: var(--sage); }
 
-/* ── Main layout ───────────────────────────────────────── */
+.balance-card.negative { border-left-color: var(--clay); }
+.balance-card.negative .amount { color: var(--clay); }
+
+/* ---------- Grille principale ---------- */
+
 .main-content {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+    margin-bottom: 36px;
+    align-items: start;
 }
 
-.left-panel, .right-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-width: 0;
-}
-
-.section {
-  background: var(--bg-elev);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 22px 22px 20px;
+.section,
+.chart-container {
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin-bottom: 20px;
 }
 
 .section h3 {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  padding-bottom: 12px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid var(--line);
-  font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--line-soft);
 }
 
-/* Strip emoji prefixes from h3 visually (they remain for a11y) */
-.section h3 {
-  position: relative;
+.chart-container h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line-soft);
 }
 
-/* ── Inputs ────────────────────────────────────────────── */
+/* ---------- Formulaires ---------- */
+
 .input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-input[type="text"],
-input[type="number"],
+input,
 select {
-  width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 9px 12px;
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  font-variant-numeric: tabular-nums;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 11px 13px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    color: var(--text);
+    transition: border-color 0.18s;
 }
 
-input[type="text"]::placeholder,
-input[type="number"]::placeholder {
-  color: var(--ink-dim);
-  font-weight: 400;
+input::placeholder {
+    color: var(--text-faint);
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
+input:focus,
 select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-soft);
+    outline: none;
+    border-color: var(--sand);
 }
 
 select {
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3e%3cpath fill='%238b8a84' d='M0 0l5 6 5-6z'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 36px;
-}
-
-select option {
-  background: var(--bg-elev);
-  color: var(--ink);
-}
-
-/* ── Buttons ───────────────────────────────────────────── */
-.btn-primary,
-.btn-secondary,
-.btn-danger {
-  background: transparent;
-  border: 1px solid var(--line-strong);
-  border-radius: 3px;
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
+    cursor: pointer;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--text-dim) 50%),
+                      linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
 }
 
 .btn-primary {
-  background: var(--accent-soft);
-  color: var(--accent);
-  border-color: var(--accent);
+    background: transparent;
+    color: var(--sand);
+    border: 1px solid var(--sand);
+    padding: 11px;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
 }
 
 .btn-primary:hover {
-  background: var(--accent);
-  color: var(--accent-ink);
+    background: var(--sand);
+    color: #17130C;
 }
 
-.btn-secondary:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
+/* ---------- Liste des dépenses ---------- */
 
-.btn-danger {
-  border-color: rgba(198, 106, 90, 0.4);
-  color: var(--neg);
-}
-
-.btn-danger:hover {
-  background: var(--neg-soft);
-  border-color: var(--neg);
-}
-
-/* ── Expenses list ─────────────────────────────────────── */
 #expensesList {
-  display: flex;
-  flex-direction: column;
-  max-height: 440px;
-  overflow-y: auto;
-  margin: -4px -4px 0;
-  padding: 4px;
-}
-
-#expensesList::-webkit-scrollbar { width: 6px; }
-#expensesList::-webkit-scrollbar-track { background: transparent; }
-#expensesList::-webkit-scrollbar-thumb {
-  background: var(--line-strong);
-  border-radius: 3px;
-}
-
-#expensesList > p {
-  font-family: var(--mono) !important;
-  font-size: 11px !important;
-  letter-spacing: 0.08em;
-  color: var(--ink-dim) !important;
-  text-align: center;
-  padding: 28px 0 !important;
-  text-transform: uppercase;
+    max-height: 420px;
+    overflow-y: auto;
 }
 
 .expense-item {
-  display: grid;
-  grid-template-columns: 1fr auto auto auto;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 4px;
-  border-bottom: 1px solid var(--line);
-  transition: background-color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 2px;
+    border-bottom: 1px solid var(--line-soft);
 }
 
-.expense-item:last-child { border-bottom: none; }
-
-.expense-item:hover {
-  background: var(--bg-card);
+.expense-item:last-child {
+    border-bottom: none;
 }
 
 .expense-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
+    flex: 1;
+    min-width: 0;
 }
 
 .expense-name {
-  font-family: var(--sans);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .expense-category {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
 }
 
 .expense-amount {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  padding-right: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    white-space: nowrap;
 }
 
 .edit-btn,
 .delete-btn {
-  background: transparent;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  color: var(--ink-muted);
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 5px 9px;
-  cursor: pointer;
-  transition: all 0.15s;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    padding: 6px 11px;
+    border-radius: var(--radius);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.18s;
 }
 
 .edit-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-soft);
+    color: var(--sand);
+    border-color: var(--sand);
 }
 
 .delete-btn:hover {
-  border-color: var(--neg);
-  color: var(--neg);
-  background: var(--neg-soft);
+    color: var(--clay);
+    border-color: var(--clay);
 }
 
-/* ── Charts ────────────────────────────────────────────── */
-.chart-container {
-  background: var(--bg-elev);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 22px 24px 24px;
-}
+/* ---------- Actions ---------- */
 
-.chart-container h3 {
-  font-family: var(--serif);
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  margin-bottom: 16px;
-  color: var(--ink);
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--line);
-}
-
-.chart-container canvas {
-  max-height: 280px;
-}
-
-/* ── Action buttons ────────────────────────────────────── */
 .actions {
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 28px;
+    border-top: 1px solid var(--line-soft);
 }
 
-/* ── Responsive ────────────────────────────────────────── */
-@media (max-width: 960px) {
-  .container { padding: 20px 18px 60px; }
-  .main-content { grid-template-columns: 1fr; }
-  .summary-cards { grid-template-columns: 1fr; }
-  header { flex-direction: column; align-items: stretch; }
-  .month-selector { width: 100%; }
-  .month-selector h2 { flex: 1; }
-  .card .amount { font-size: 24px; }
-  header h1 { font-size: 22px; flex-wrap: wrap; }
+.btn-secondary,
+.btn-danger {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.84rem;
+    cursor: pointer;
+    transition: all 0.18s;
 }
 
-@media (max-width: 520px) {
-  .expense-item {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    gap: 6px 10px;
-  }
-  .expense-amount {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .edit-btn { grid-column: 1; }
-  .delete-btn { grid-column: 2; }
-  .actions { flex-direction: column; }
-  .actions button { width: 100%; }
+.btn-secondary:hover {
+    color: var(--text);
+    border-color: var(--text-dim);
+}
+
+.btn-danger:hover {
+    color: var(--clay);
+    border-color: var(--clay);
+}
+
+/* ---------- Accessibilité ---------- */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--sand);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
+
+/* ---------- Défilement ---------- */
+
+#expensesList::-webkit-scrollbar { width: 6px; }
+#expensesList::-webkit-scrollbar-track { background: transparent; }
+#expensesList::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 3px;
+}
+#expensesList::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+    body { padding: 24px 14px 40px; }
+    .main-content { grid-template-columns: 1fr; }
+    #currentPeriod { min-width: 0; font-size: 1.15rem; }
+    .card .amount { font-size: 1.7rem; }
+    .actions button { flex: 1 1 140px; }
 }
