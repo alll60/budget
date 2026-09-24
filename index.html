@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestionnaire de Budget</title>
+    <title>Budget Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,11 +14,11 @@
 <body>
     <div class="container">
         <header>
-            <h1>&#128176; Gestionnaire de Budget</h1>
+            <h1>&#128176; Budget Tracker</h1>
 
             <div class="view-toggle">
-                <button id="viewMonthly" class="toggle-btn active">Mensuel</button>
-                <button id="viewYearly" class="toggle-btn">Annuel</button>
+                <button id="viewMonthly" class="toggle-btn active">Monthly</button>
+                <button id="viewYearly" class="toggle-btn">Yearly</button>
             </div>
 
             <div class="month-selector">
@@ -30,72 +30,72 @@
 
         <div class="summary-cards">
             <div class="card income-card">
-                <h3 id="incomeLabel">Revenu Mensuel</h3>
-                <p class="amount" id="totalIncome">0,00 $</p>
+                <h3 id="incomeLabel">Monthly Income</h3>
+                <p class="amount" id="totalIncome">$0.00</p>
             </div>
             <div class="card expense-card">
-                <h3>D&eacute;penses Totales</h3>
-                <p class="amount" id="totalExpenses">0,00 $</p>
+                <h3>Total Expenses</h3>
+                <p class="amount" id="totalExpenses">$0.00</p>
             </div>
             <div class="card balance-card">
-                <h3>Reste</h3>
-                <p class="amount" id="remaining">0,00 $</p>
+                <h3>Remaining</h3>
+                <p class="amount" id="remaining">$0.00</p>
             </div>
         </div>
 
         <div class="main-content">
             <div class="left-panel">
                 <div class="section" id="incomeSection">
-                    <h3>&#128181; D&eacute;finir le Revenu Mensuel</h3>
+                    <h3>&#128181; Set Monthly Income</h3>
                     <div class="input-group">
-                        <input type="number" id="incomeAmount" placeholder="Entrer le montant" step="0.01">
-                        <button id="setIncome" class="btn-primary">D&eacute;finir le Revenu</button>
+                        <input type="number" id="incomeAmount" placeholder="Enter amount" step="0.01">
+                        <button id="setIncome" class="btn-primary">Set Income</button>
                     </div>
                 </div>
 
                 <div class="section" id="expenseSection">
-                    <h3>&#10133; Ajouter une D&eacute;pense</h3>
+                    <h3>&#10133; Add Expense</h3>
                     <div class="input-group">
-                        <input type="text" id="expenseName" placeholder="Nom de la d&eacute;pense">
-                        <input type="number" id="expenseAmount" placeholder="Montant" step="0.01">
+                        <input type="text" id="expenseName" placeholder="Expense name">
+                        <input type="number" id="expenseAmount" placeholder="Amount" step="0.01">
                         <select id="expenseCategory">
-                            <option value="Logement">&#127968; Logement</option>
-                            <option value="Nourriture">&#127828; Nourriture</option>
-                            <option value="Transport">&#128663; Transport</option>
-                            <option value="Services">&#128161; Services</option>
-                            <option value="Divertissement">&#127918; Divertissement</option>
-                            <option value="Sant&eacute;">&#127973; Sant&eacute;</option>
-                            <option value="Magasinage">&#128717; Magasinage</option>
-                            <option value="Autre">&#128230; Autre</option>
+                            <option value="Housing">&#127968; Housing</option>
+                            <option value="Food">&#127828; Food</option>
+                            <option value="Transportation">&#128663; Transportation</option>
+                            <option value="Utilities">&#128161; Utilities</option>
+                            <option value="Entertainment">&#127918; Entertainment</option>
+                            <option value="Healthcare">&#127973; Healthcare</option>
+                            <option value="Shopping">&#128717; Shopping</option>
+                            <option value="Other">&#128230; Other</option>
                         </select>
-                        <button id="addExpense" class="btn-primary">Ajouter la D&eacute;pense</button>
+                        <button id="addExpense" class="btn-primary">Add Expense</button>
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3 id="listTitle">&#128203; Liste des D&eacute;penses</h3>
+                    <h3 id="listTitle">&#128203; Expenses List</h3>
                     <div id="expensesList"></div>
                 </div>
             </div>
 
             <div class="right-panel">
                 <div class="chart-container">
-                    <h3>D&eacute;penses par Cat&eacute;gorie</h3>
+                    <h3>Expenses by Category</h3>
                     <canvas id="pieChart"></canvas>
                 </div>
                 <div class="chart-container">
-                    <h3 id="barTitle">R&eacute;partition par Cat&eacute;gorie</h3>
+                    <h3 id="barTitle">Category Breakdown</h3>
                     <canvas id="barChart"></canvas>
                 </div>
             </div>
         </div>
 
         <div class="actions">
-            <button id="exportCSV" class="btn-secondary">&#128202; Exporter CSV</button>
-            <button id="exportPDF" class="btn-secondary">&#128196; Exporter PDF</button>
-            <button id="exportData" class="btn-secondary">&#128229; Sauvegarde JSON</button>
-            <button id="importData" class="btn-secondary">&#128228; Importer JSON</button>
-            <button id="clearMonth" class="btn-danger">&#128465; Effacer cette p&eacute;riode</button>
+            <button id="exportCSV" class="btn-secondary">&#128202; Export CSV</button>
+            <button id="exportPDF" class="btn-secondary">&#128196; Export PDF</button>
+            <button id="exportData" class="btn-secondary">&#128229; Backup JSON</button>
+            <button id="importData" class="btn-secondary">&#128228; Import JSON</button>
+            <button id="clearMonth" class="btn-danger">&#128465; Clear this period</button>
         </div>
     </div>
 
