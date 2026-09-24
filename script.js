@@ -12,16 +12,16 @@ const CATEGORIES = ['Housing', 'Food', 'Transportation', 'Utilities',
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
                      'July', 'August', 'September', 'October', 'November', 'December'];
 
-// Muted palette tuned for the dark theme
+// Muted palette tuned for the dark theme (EN + FR names)
 const categoryColors = {
-    'Housing': '#D6A96A',
-    'Food': '#6FB79A',
-    'Transportation': '#6E8FC4',
-    'Utilities': '#B57BA6',
-    'Entertainment': '#C9705C',
-    'Healthcare': '#9AA45C',
-    'Shopping': '#8C7BC4',
-    'Other': '#7E8A92'
+    'Housing':        '#D6A96A', 'Logement':       '#D6A96A',
+    'Food':           '#6FB79A', 'Nourriture':     '#6FB79A',
+    'Transportation': '#6E8FC4', 'Transport':      '#6E8FC4',
+    'Utilities':      '#B57BA6', 'Services':       '#B57BA6',
+    'Entertainment':  '#C9705C', 'Divertissement': '#C9705C',
+    'Healthcare':     '#9AA45C', 'Sant\u00e9':     '#9AA45C',
+    'Shopping':       '#8C7BC4', 'Magasinage':     '#8C7BC4',
+    'Other':          '#7E8A92', 'Autre':          '#7E8A92'
 };
 
 // Match the charts to the dark background
@@ -536,10 +536,10 @@ function importData(event) {
 }
 
 function saveData() {
-    localStorage.setItem('budgetData', JSON.stringify(budgetData));
+    localStorage.setItem('budgetData_en', JSON.stringify(budgetData));
 }
 
 function loadData() {
-    const saved = localStorage.getItem('budgetData');
+    const saved = localStorage.getItem('budgetData_en');
     return saved ? JSON.parse(saved) : {};
 }
