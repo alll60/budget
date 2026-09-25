@@ -237,9 +237,25 @@ function updatePeriodDisplay() {
 
 function refreshAll() {
     updatePeriodDisplay();
+    syncExpenseMonthInput();
     updateSummary();
     displayExpenses();
     updateCharts();
+}
+
+/* ---------- Expense month picker ---------- */
+
+/** Month key chosen in the form's month picker (validated), or the viewed month. */
+function getExpenseMonthKey() {
+    const el = document.getElementById('expenseMonth');
+    if (el && /^\d{4}-(0[1-9]|1[0-2])$/.test(el.value)) return el.value;
+    return getMonthKey();
+}
+
+/** Keep the picker defaulting to the month currently being viewed. */
+function syncExpenseMonthInput() {
+    const el = document.getElementById('expenseMonth');
+    if (el && document.activeElement !== el) el.value = getMonthKey();
 }
 
 /* ---------- Input ---------- */
@@ -269,7 +285,7 @@ function addExpense() {
     const freqEl = document.getElementById('expenseFrequency');
     const frequency = (freqEl && FREQUENCIES.includes(freqEl.value)) ? freqEl.value : 'once';
 
-    const mKey = getMonthKey();
+    const mKey = getExpenseMonthKey();
     if (!budgetData[mKey]) budgetData[mKey] = { income: 0, expenses: [] };
 
     budgetData[mKey].expenses.push({
