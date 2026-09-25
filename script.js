@@ -131,6 +131,44 @@ function getMonthData(year, monthIdx) {
     return { income: getMonthIncome(year, monthIdx), expenses: getMonthExpenses(year, monthIdx) };
 }
 
+/**
+ * Annual expenses that apply to a given year (entered in that year or earlier),
+ * each returned once regardless of its anniversary month.
+ */
+function getYearAnnuals(year) {
+    const annuals = [];
+    Object.keys(budgetData).forEach(k => {
+        const p = parseKey(k);
+        if (isNaN(p.year) || p.year > year) return;
+        ((budgetData[k].expenses) || []).forEach(e => {
+            if ((e.frequency || 'once') === 'annual') annuals.push(e);
+        });
+    });
+    return annuals;
+}
+
+/**
+ * A month's data for the YEARLY view: one-time and monthly expenses in full,
+ * plus every annual expense spread evenly as amount/12 under its own category.
+ * Annual costs no longer pile onto a single month's row.
+ */
+function getYearlyMonthData(year, monthIdx) {
+    const key = monthKey(year, monthIdx);
+    const md = getMonthData(year, monthIdx);
+    const expenses = md.expenses
+        .filter(e => (e.frequency || 'once') !== 'annual')
+        .map(e => Object.assign({}, e));
+    getYearAnnuals(year).forEach(e => {
+        expenses.push(Object.assign({}, e, {
+            amount: e.amount / 12,
+            month: key,
+            frequency: 'annual',
+            prorated: true
+        }));
+    });
+    return { income: md.income, expenses };
+}
+
 function getPeriodData() {
     const year = currentDate.getFullYear();
     if (viewMode === 'monthly') {
@@ -139,7 +177,7 @@ function getPeriodData() {
     let income = 0;
     let expenses = [];
     for (let i = 0; i < 12; i++) {
-        const md = getMonthData(year, i);
+        const md = getYearlyMonthData(year, i);
         income += md.income;
         expenses = expenses.concat(md.expenses);
     }
@@ -311,7 +349,7 @@ function displayExpenses() {
     if (isYearly()) {
         const rows = [];
         for (let i = 0; i < 12; i++) {
-            const md = getMonthData(year, i);
+            const md = getYearlyMonthData(year, i);
             const total = md.expenses.reduce((s, e) => s + e.amount, 0);
             const income = md.income;
             if (total === 0 && income === 0) continue;
@@ -413,7 +451,7 @@ function updateCharts() {
         barLabels = MONTH_NAMES.map(m => m.substring(0, 3));
         barValues = [];
         for (let i = 0; i < 12; i++) {
-            barValues.push(getMonthData(currentDate.getFullYear(), i)
+            barValues.push(getYearlyMonthData(currentDate.getFullYear(), i)
                 .expenses.reduce((s, e) => s + e.amount, 0));
         }
         barColors = barValues.map(() => '#D6A96A');
